@@ -11,8 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 // Load ABIs
-const MET_ABI = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'abi', 'METToken.json')));
-const FAUCET_ABI = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'abi', 'Faucet.json')));
+const MET_ABI = JSON.parse(fs.readFileSync(path.join(__dirname, 'abi', 'METToken.json')));
+const FAUCET_ABI = JSON.parse(fs.readFileSync(path.join(__dirname, 'abi', 'Faucet.json')));
 
 // Web3 setup
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL));
