@@ -56,3 +56,4 @@ document.getElementById('buyMET').addEventListener('click', async () => {
     alert(`Error: ${data.error}`);
   }
 });
+
