@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
-const Web3 = require('web3');
+const Web3 = require('web3').default;
 const fs = require('fs');
 const cors = require('cors');
 const path = require('path');
