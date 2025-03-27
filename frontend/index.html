@@ -1,41 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8" />
-  <title>Buy MET Tokens</title>
-  <link rel="stylesheet" href="../style.css" />
+  <title>Buy MET Tokens with BNB</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Buy MET Tokens with BNB</h1>
-    <div id="walletSection">
-      <button id="connectMetaMask" onclick="connectMetaMask()">Connect MetaMask</button>
-      <button id="connectWalletConnect" onclick="connectWalletConnect()">Connect WalletConnect</button>
-      <p id="walletAddress">Not connected</p>
-    </div>
-    <div id="conversionSection">
-      <p id="bnbPrice">Fetching BNB price...</p>
-      <label for="bnbAmount">BNB Amount:</label>
-      <input type="number" id="bnbAmount" step="0.0001" placeholder="Enter BNB amount" />
-      <br>
-      <label for="usdAmount">or USD Amount:</label>
-      <input type="number" id="usdAmount" step="0.01" placeholder="Enter USD amount" />
-      <p id="metAmount">You will receive: 0 MET</p>
-      <button id="calculateButton" onclick="calculateMET()">Calculate</button>
-      <button id="buyButton" style="display:none;" onclick="buyMET()">Buy MET Tokens</button>
-    </div>
-    <div id="statusSection">
-      <p id="status"></p>
-    </div>
-    <hr>
-    <p>
-      <a href="../faucet.html">Go to Faucet Page</a> | 
-      <a href="../admin.html">Go to Admin Page</a>
-    </p>
-  </div>
-  <!-- Include Web3.js and WalletConnect -->
-  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider/dist/umd/index.min.js"></script>
-  <script src="../main.js"></script>
+  <h1>Buy MET Tokens with BNB</h1>
+
+  <button onclick="connectMetaMask()">Connect MetaMask</button>
+  <button onclick="connectWalletConnect()">Connect WalletConnect</button>
+  <p id="wallet-status">Not connected</p>
+
+  <p id="bnb-price">Fetching BNB price...</p>
+
+  <label for="bnbAmount">BNB Amount:</label>
+  <input type="number" id="bnbAmount" placeholder="Enter BNB amount" oninput="convertFromBNB()" />
+
+  <br><br>
+
+  <label for="usdAmount">or USD Amount:</label>
+  <input type="number" id="usdAmount" placeholder="Enter USD amount" oninput="convertFromUSD()" />
+
+  <p id="metResult">You will receive: 0 MET</p>
+
+  <button onclick="calculateAndBuy()">Calculate</button>
+
+  <br><br>
+  <a href="faucet.html">Go to Faucet Page</a> | <a href="admin.html">Go to Admin Page</a>
+
+  <script src="main.js"></script>
 </body>
 </html>
