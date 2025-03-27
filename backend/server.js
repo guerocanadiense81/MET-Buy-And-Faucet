@@ -1,3 +1,5 @@
+// backend/server.js
+
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
@@ -14,57 +16,64 @@ app.use(express.json());
 const MET_ABI = JSON.parse(fs.readFileSync(path.join(__dirname, 'abi', 'METToken.json')));
 const FAUCET_ABI = JSON.parse(fs.readFileSync(path.join(__dirname, 'abi', 'Faucet.json')));
 
-// Web3 setup
+// Setup Web3
 const web3 = new Web3(process.env.INFURA_URL);
+
+// Add admin account from PRIVATE_KEY
 const admin = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
 web3.eth.accounts.wallet.add(admin);
+web3.eth.defaultAccount = admin.address;
 
-// Contract instances
+// Create contract instances
 const metContract = new web3.eth.Contract(MET_ABI, process.env.MET_CONTRACT_ADDRESS);
 const faucetContract = new web3.eth.Contract(FAUCET_ABI, process.env.FAUCET_CONTRACT_ADDRESS);
 
-// Serve frontend static files
+// Serve static frontend
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
-// Endpoints
+// === API Routes ===
 
-// Price feed
+// Get live BNB/USD rate
 app.get('/api/bnb-price', async (req, res) => {
   try {
-    const { data } = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd`);
+    const { data } = await axios.get(`https://api.coingecko.com/api/v3/simple/price`, {
+      params: {
+        ids: 'binancecoin',
+        vs_currencies: 'usd'
+      }
+    });
     res.json({ bnbPriceUSD: data.binancecoin.usd });
-  } catch (e) {
+  } catch {
     res.status(500).json({ error: 'Failed to fetch BNB price' });
   }
 });
 
-// Calculate MET amount
+// Calculate MET based on BNB
 app.post('/api/calculate-met', async (req, res) => {
   const { bnbAmount } = req.body;
   try {
     const { data } = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd`);
-    const met = bnbAmount * data.binancecoin.usd;
-    res.json({ metTokens: met });
+    const usd = bnbAmount * data.binancecoin.usd;
+    res.json({ metTokens: usd }); // 1 MET = $1
   } catch {
-    res.status(500).json({ error: 'Conversion failed' });
+    res.status(500).json({ error: 'Failed to calculate' });
   }
 });
 
-// Buy MET tokens
+// Buy MET
 app.post('/api/buy-met', async (req, res) => {
   const { buyerAddress, bnbAmount } = req.body;
   try {
     const { data } = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd`);
-    const metTokens = bnbAmount * data.binancecoin.usd;
+    const metAmount = bnbAmount * data.binancecoin.usd;
 
-    const tx = await metContract.methods.transfer(buyerAddress, web3.utils.toWei(metTokens.toString(), 'ether')).send({
-      from: admin.address,
-      gas: 200000,
-    });
+    const tx = await metContract.methods
+      .transfer(buyerAddress, web3.utils.toWei(metAmount.toString(), 'ether'))
+      .send({ from: admin.address, gas: 200000 });
 
-    res.json({ txHash: tx.transactionHash, metTokens });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+    res.json({ txHash: tx.transactionHash, metTokens: metAmount });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -82,15 +91,19 @@ app.post('/api/claim-faucet', async (req, res) => {
   }
 });
 
-// Admin updates
+// Admin set new drip amount
 app.post('/api/update-drip', async (req, res) => {
   const { amount } = req.body;
   try {
-    await faucetContract.methods.updateDripAmount(web3.utils.toWei(amount, 'ether')).send({ from: admin.address });
+    await faucetContract.methods
+      .updateDripAmount(web3.utils.toWei(amount, 'ether'))
+      .send({ from: admin.address });
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(process.env.PORT, () => console.log(`🚀 Server running on port ${process.env.PORT}`));
+app.listen(process.env.PORT || 8080, () =>
+  console.log(`🚀 Server listening on port ${process.env.PORT || 8080}`)
+);
