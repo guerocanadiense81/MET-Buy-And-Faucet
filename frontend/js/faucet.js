@@ -1,25 +1,28 @@
+// frontend/js/faucet.js
+
 async function connectWallet() {
-  if (typeof window.ethereum !== 'undefined') {
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  if (window.ethereum) {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
     document.getElementById('wallet-status').innerText = `Connected: ${accounts[0]}`;
     window.userAddress = accounts[0];
+  } else {
+    alert("MetaMask not detected");
   }
 }
 
 async function claimFaucet() {
-  if (!window.userAddress) return alert('Please connect wallet first');
+  if (!window.userAddress) return alert('Connect your wallet first');
 
   const res = await fetch('/api/claim-faucet', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userAddress: window.userAddress })
+    body: JSON.stringify({ userAddress: window.userAddress }),
   });
 
   const data = await res.json();
-  const status = document.getElementById('faucet-status');
   if (data.txHash) {
-    status.innerText = `Success! Tx: ${data.txHash}`;
+    document.getElementById('faucet-status').innerText = `Claim successful! Tx: ${data.txHash}`;
   } else {
-    status.innerText = `Error: ${data.error}`;
+    document.getElementById('faucet-status').innerText = `Error: ${data.error}`;
   }
 }
