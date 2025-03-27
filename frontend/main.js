@@ -1,7 +1,7 @@
 // Set constants
 const MET_WALLET_ADDRESS = "0x073f5CaDb9424Ce0a50a6E567AB87c2Be97D76F6";
 const MET_CONTRACT_ADDRESS = "0xCFa63A2B76120dda8992Ac9cc5A8Ba7079b0bd29";
-const BACKEND_URL = "https://your-render-backend-url.com"; // Replace with your Render.com URL
+const BACKEND_URL = "https://met-buy-and-faucet.onrender.com"; // Replace with your Render.com URL
 
 // Replace with your MET Token ABI from abi/METToken.json
 const MET_ABI = [
