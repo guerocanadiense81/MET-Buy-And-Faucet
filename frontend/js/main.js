@@ -1,5 +1,3 @@
-from pathlib import Path
-
 # Recreate updated frontend JS scripts with Render backend URL
 BASE_URL = "https://met-buy-and-faucet.onrender.com"
 
