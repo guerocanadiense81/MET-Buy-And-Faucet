@@ -43,3 +43,4 @@ contract MyERC20Token {
         return true;
     }
 }
+
