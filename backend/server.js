@@ -10,8 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 // Load ABI files (ensure these files exist in the abi/ directory)
-const MET_ABI = JSON.parse(fs.readFileSync('./abi/METToken.json'));
-const FAUCET_ABI = JSON.parse(fs.readFileSync('./abi/Faucet.json'));
+const MET_ABI = JSON.parse(fs.readFileSync('../abi/METToken.json'));
+const FAUCET_ABI = JSON.parse(fs.readFileSync('../abi/Faucet.json'));
 
 // Connect to BSC using Infura RPC URL
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL));
