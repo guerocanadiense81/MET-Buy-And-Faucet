@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MET Faucet</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>MET Faucet</h1>
+    <button onclick="connectMetaMask()">Connect MetaMask</button>
+    <p id="walletAddress">Not connected</p>
+    <button onclick="requestFaucet()">Request Free MET Tokens</button>
+    <p id="faucetStatus"></p>
+    <p><a href="index.html">Back to Buy Page</a></p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <script src="faucet.js"></script>
+</body>
+</html>
