@@ -1,45 +1,111 @@
+/* Global Dark Theme Reset */
 body {
   background-color: #121212;
   color: #f0f0f0;
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  line-height: 1.6;
 }
 
+/* Main Container */
 .container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-  background-color: #1f1f1f;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 25px;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  border: 1px solid #333;
 }
 
-input, button {
+/* Glowing Header */
+h1 {
+  font-size: 1.8em;
+  color: #ff69b4;
+  text-shadow: 0 0 6px #ff69b4, 0 0 12px #ff69b4;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Labels */
+label {
   display: block;
-  margin: 10px 0;
-  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Inputs */
+input[type="number"],
+input[type="text"] {
   width: 100%;
-  border-radius: 6px;
-  border: none;
+  padding: 10px;
+  margin-top: 5px;
   background-color: #2a2a2a;
-  color: #fff;
+  border: 1px solid #444;
+  border-radius: 5px;
+  color: #f0f0f0;
 }
 
-button {
-  background-color: #6200ea;
+input:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 5px #ff69b4;
+}
+
+/* Buttons */
+button,
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background-color: #ff69b4;
+  color: #121212;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-button:hover {
-  background-color: #3700b3;
+button:hover,
+.btn:hover {
+  background-color: #ff85c1;
+  transform: scale(1.03);
+  box-shadow: 0 0 10px #ff69b4;
 }
 
-a {
-  color: #bb86fc;
+/* Status & Price */
+.status, #wallet-status, #admin-wallet-status, #bnb-price, #metResult {
+  margin-top: 15px;
+  padding: 8px 12px;
+  background: #2a2a2a;
+  border-radius: 5px;
+  border: 1px solid #444;
+  color: #eee;
+}
+
+/* Navigation Links */
+.links {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.links a {
+  color: #9ad;
   text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
 }
 
-a:hover {
-  text-decoration: underline;
+.links a:hover {
+  color: #ff69b4;
+  text-shadow: 0 0 5px #ff69b4;
+}
+
+/* Input Group Style for Admin Panel */
+.input-group {
+  margin-top: 20px;
 }
