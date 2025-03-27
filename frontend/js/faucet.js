@@ -13,3 +13,4 @@ document.getElementById('claimFaucet').addEventListener('click', async () => {
   const result = await res.json();
   alert(result.txHash ? "Success!" : `Error: ${result.error}`);
 });
+
