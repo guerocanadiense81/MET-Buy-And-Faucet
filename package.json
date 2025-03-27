@@ -1,16 +1,19 @@
 {
   "name": "met-faucet-backend",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "Backend server for MET token faucet and purchase",
+  "main": "backend/server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node backend/server.js"
   },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.1.4",
     "express": "^4.18.2",
-    "fs": "0.0.1-security",
-    "web3": "^1.10.0"
+    "web3": "^4.1.2"
   }
 }
