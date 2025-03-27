@@ -1,23 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>MET Token Faucet</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>MET Faucet</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>MET Token Faucet</h1>
-  <p>Claim 1 MET token every 24 hours</p>
+  <header>MET Faucet</header>
+  <div class="container">
+    <p>Click to claim 1 MET every 24 hours.</p>
+    <button id="connectMetaMask">Connect Wallet</button>
+    <button id="claimFaucet">Claim Faucet</button>
+    <div id="faucet-status"></div>
+    <a href="index.html">← Back to Buy Page</a>
+  </div>
+  <script>
+    let userAddress;
 
-  <button onclick="connectMetaMask()">Connect MetaMask</button>
-  <p id="wallet-status">Not connected</p>
+    document.getElementById('connectMetaMask').addEventListener('click', async () => {
+      if (window.ethereum) {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        userAddress = ethereum.selectedAddress;
+      } else {
+        alert('MetaMask not detected!');
+      }
+    });
 
-  <button onclick="requestFaucet()">Request Tokens</button>
-  <p id="faucet-response"></p>
-
-  <br><br>
-  <a href="index.html">Back to Buy Page</a> | <a href="admin.html">Go to Admin Page</a>
-
-  <script src="faucet.js"></script>
+    document.getElementById('claimFaucet').addEventListener('click', async () => {
+      if (!userAddress) return alert('Please connect wallet first.');
+      const res = await fetch('/api/claim-faucet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userAddress })
+      });
+      const data = await res.json();
+      if (data.txHash) {
+        document.getElementById('faucet-status').innerText = `Success! Tx: ${data.txHash}`;
+      } else {
+        document.getElementById('faucet-status').innerText = `Error: ${data.error}`;
+      }
+    });
+  </script>
 </body>
 </html>
