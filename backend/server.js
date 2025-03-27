@@ -20,9 +20,6 @@ const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL));
 const metContract = new web3.eth.Contract(MET_ABI, process.env.MET_CONTRACT_ADDRESS);
 const faucetContract = new web3.eth.Contract(FAUCET_ABI, process.env.FAUCET_CONTRACT_ADDRESS);
 
-app.use(cors());
-app.use(bodyParser.json());
-
 // Serve static files from project root
 app.use(express.static(path.join(__dirname, '..')));
 
