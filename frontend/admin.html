@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Admin Panel</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Faucet Admin Controls</h1>
-
-  <p>Set Drip Amount (MET):</p>
-  <input type="number" id="dripAmount" />
-  <button onclick="updateDripAmount()">Update</button>
-
-  <p>Set Cooldown (Seconds):</p>
-  <input type="number" id="cooldown" />
-  <button onclick="updateCooldown()">Update</button>
-
-  <p>Withdraw MET Tokens:</p>
-  <input type="number" id="withdrawAmount" />
-  <button onclick="withdrawTokens()">Withdraw</button>
-
-  <br><br>
-  <a href="index.html">Back to Buy Page</a> | <a href="faucet.html">Go to Faucet Page</a>
-
-  <script src="admin.js"></script>
+  <header>Admin Panel</header>
+  <div class="container">
+    <p>Update Faucet Drip Amount (in MET):</p>
+    <input type="number" id="dripAmount" placeholder="e.g. 1">
+    <button id="updateDrip">Update Drip</button>
+    <div id="admin-status"></div>
+    <a href="index.html">← Back to Buy Page</a>
+  </div>
+  <script>
+    document.getElementById('updateDrip').addEventListener('click', async () => {
+      const amount = document.getElementById('dripAmount').value;
+      const res = await fetch('/api/update-drip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount })
+      });
+      const data = await res.json();
+      document.getElementById('admin-status').innerText = data.success ? 'Updated successfully' : `Error: ${data.error}`;
+    });
+  </script>
 </body>
 </html>
