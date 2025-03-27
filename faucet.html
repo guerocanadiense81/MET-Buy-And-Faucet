@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MET Faucet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>💧 Claim MET Faucet</h1>
+    <p id="wallet-status">Not connected</p>
+    <button class="btn" onclick="connectWallet()">🔌 Connect MetaMask</button>
+    <button class="btn" onclick="claimFaucet()">💦 Claim 1 MET</button>
+    <p class="status" id="faucet-status"></p>
+    <div class="links">
+      <a href="index.html">← Back to Buy Page</a> |
+      <a href="admin.html">⚙️ Admin Panel</a>
+    </div>
+  </div>
+  <script src="js/faucet.js"></script>
+</body>
+</html>
