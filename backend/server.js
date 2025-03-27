@@ -9,22 +9,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Load ABI files (ensure these files exist in the abi/ directory)
+// Read ABI files from the sibling abi folder
 const MET_ABI = JSON.parse(fs.readFileSync('../abi/METToken.json'));
 const FAUCET_ABI = JSON.parse(fs.readFileSync('../abi/Faucet.json'));
 
-// Connect to BSC using Infura RPC URL
+// Connect to BSC via Infura RPC URL (or your preferred endpoint)
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL));
 
 // Create contract instances
 const metContract = new web3.eth.Contract(MET_ABI, process.env.MET_CONTRACT_ADDRESS);
 const faucetContract = new web3.eth.Contract(FAUCET_ABI, process.env.FAUCET_CONTRACT_ADDRESS);
 
-// Derive admin account from private key
+// Derive admin account from PRIVATE_KEY
 const admin = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
 web3.eth.accounts.wallet.add(admin);
 
-// Endpoint: Fetch current BNB/USD price from CoinGecko
+// Endpoint: Get current BNB/USD price from CoinGecko
 app.get('/api/bnb-price', async (req, res) => {
   try {
     const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
@@ -64,6 +64,7 @@ app.post('/api/buy-met', async (req, res) => {
     const usdValue = bnbAmount * bnbPriceUSD;
     const metTokens = usdValue; // 1 MET = 1 USD
 
+    // Transfer MET tokens from admin's account to buyer
     const tx = await metContract.methods.transfer(buyerAddress, web3.utils.toWei(metTokens.toString(), 'ether')).send({
       from: admin.address,
       gas: 200000,
