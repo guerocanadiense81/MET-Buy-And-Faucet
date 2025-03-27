@@ -4,12 +4,14 @@ const axios = require('axios');
 const Web3 = require('web3');
 const fs = require('fs');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
 // Read ABI files from the sibling abi folder
-const MET_ABI = JSON.parse(fs.readFileSync('../abi/METToken.json'));
-const FAUCET_ABI = JSON.parse(fs.readFileSync('../abi/Faucet.json'));
+const MET_ABI = JSON.parse(fs.readFileSync('/abi/METToken.json'));
+const FAUCET_ABI = JSON.parse(fs.readFileSync('/abi/Faucet.json'));
 
 // Connect to BSC via Infura RPC URL (or your preferred endpoint)
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.INFURA_URL));
