@@ -4,31 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Buy MET Tokens</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <h1>🚀 Buy MET Tokens</h1>
+  <div class="container">
+    <h1>🚀 Buy MET Tokens</h1>
 
-  <button id="connectMetaMask">🔗 Connect MetaMask</button>
-  <div id="wallet-status">Not connected</div>
+    <button id="connectMetaMask" class="btn">🔌 Connect MetaMask</button>
+    <p id="wallet-status" class="status">Not connected</p>
 
-  <label for="bnbAmount">BNB Amount</label>
-  <input id="bnbAmount" type="number" step="any" placeholder="e.g. 0.05" />
+    <div class="input-group">
+      <label for="bnbAmount">BNB Amount</label>
+      <input id="bnbAmount" placeholder="e.g. 0.05" type="number" step="any" />
+    </div>
+    <div class="input-group">
+      <label for="usdAmount">USD Amount</label>
+      <input id="usdAmount" placeholder="e.g. 10" type="number" step="any" />
+    </div>
 
-  <label for="usdAmount">USD Amount</label>
-  <input id="usdAmount" type="number" step="any" placeholder="e.g. 10" />
+    <button id="calculate" class="btn">🔥 Calculate MET</button>
 
-  <br />
-  <button id="calculate">🔥 Calculate MET</button>
-  <p id="bnb-price">BNB/USD: $0</p>
-  <p id="metResult">You will receive: 0 MET</p>
+    <div id="bnb-price" class="price">BNB/USD: $...</div>
+    <div id="metResult" class="result">You will receive: 0 MET</div>
 
-  <button id="buyMet">💸 Buy MET</button>
+    <button id="buyMet" class="btn buy">🪙 Buy MET</button>
 
-  <p>
-    🪙 <a href="faucet.html">Claim from Faucet</a> |
-    ⚙️ <a href="admin.html">Admin Panel</a>
-  </p>
+    <div class="links">
+      <a href="faucet.html">🔸 Claim from Faucet</a> |
+      <a href="admin.html">⚙️ Admin Panel</a>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
