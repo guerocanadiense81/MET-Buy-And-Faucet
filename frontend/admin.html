@@ -2,29 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
+  <title>MET Admin Panel</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>Admin Panel</header>
   <div class="container">
-    <p>Update Faucet Drip Amount (in MET):</p>
-    <input type="number" id="dripAmount" placeholder="e.g. 1">
-    <button id="updateDrip">Update Drip</button>
-    <div id="admin-status"></div>
-    <a href="index.html">← Back to Buy Page</a>
+    <h1>⚙️ Admin Panel</h1>
+    <p id="admin-wallet-status">Not connected</p>
+
+    <button class="btn" onclick="connectWallet()">🔌 Connect MetaMask</button>
+
+    <div class="input-group">
+      <label for="dripAmount">Drip Amount (MET)</label>
+      <input id="dripAmount" type="text" placeholder="e.g. 1">
+    </div>
+    <button class="btn" onclick="updateDrip()">💧 Update Drip Amount</button>
+
+    <p class="status" id="admin-status"></p>
+
+    <div class="links">
+      <a href="index.html">← Back to Buy Page</a> |
+      <a href="faucet.html">💧 Faucet Page</a>
+    </div>
   </div>
+
   <script>
-    document.getElementById('updateDrip').addEventListener('click', async () => {
+    async function connectWallet() {
+      if (typeof window.ethereum !== 'undefined') {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        document.getElementById('admin-wallet-status').innerText = `Connected: ${accounts[0]}`;
+        window.adminAddress = accounts[0];
+      }
+    }
+
+    async function updateDrip() {
       const amount = document.getElementById('dripAmount').value;
+      if (!amount) return alert('Enter amount');
       const res = await fetch('/api/update-drip', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount })
       });
       const data = await res.json();
-      document.getElementById('admin-status').innerText = data.success ? 'Updated successfully' : `Error: ${data.error}`;
-    });
+      if (data.success) {
+        document.getElementById('admin-status').innerText = `Drip updated to ${amount} MET`;
+      } else {
+        document.getElementById('admin-status').innerText = `Error: ${data.error}`;
+      }
+    }
   </script>
 </body>
 </html>
