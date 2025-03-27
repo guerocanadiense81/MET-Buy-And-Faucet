@@ -1,0 +1,9 @@
+[{"inputs":[{"internalType":"address","name":"_tokenAddress","type":"address"},
+{"internalType":"uint256","name":"_dripAmount","type":"uint256"}],
+"stateMutability":"nonpayable","type":"constructor"},
+{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"recipient","type":"address"},
+{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],
+"name":"Drip","type":"event"},
+{"inputs":[],"name":"requestTokens","outputs":[],"stateMutability":"nonpayable","type":"function"},
+{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"updateDripAmount","outputs":[],"stateMutability":"nonpayable","type":"function"},
+{"inputs":[],"name":"dripAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}]
