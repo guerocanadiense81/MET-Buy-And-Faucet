@@ -1,69 +1,45 @@
 body {
   background-color: #121212;
-  color: #e0e0e0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #f0f0f0;
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  padding: 2rem;
+  padding: 20px;
 }
 
-h1 {
-  color: #f8f8f8;
-  margin-bottom: 1.5rem;
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+input, button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+  border: none;
+  background-color: #2a2a2a;
+  color: #fff;
 }
 
 button {
-  background-color: #673ab7;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  margin: 5px 0;
-  border-radius: 5px;
+  background-color: #6200ea;
   cursor: pointer;
-  font-weight: bold;
 }
 
 button:hover {
-  background-color: #5e35b1;
-}
-
-input[type="text"],
-input[type="number"] {
-  padding: 8px;
-  border: 1px solid #444;
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  margin: 5px 0;
-  border-radius: 5px;
-  width: 250px;
+  background-color: #3700b3;
 }
 
 a {
-  color: #b39ddb;
+  color: #bb86fc;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
-}
-
-label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 600;
-}
-
-footer {
-  margin-top: 3rem;
-  text-align: center;
-  color: #999;
-  font-size: 0.9rem;
-}
-
-#bnb-price,
-#wallet-status,
-#metResult,
-#faucet-status,
-#admin-status {
-  margin-top: 10px;
-  font-weight: bold;
 }
