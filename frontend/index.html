@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy MET Tokens</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Buy MET Tokens</h1>
+
+    <button id="connectMetaMask">🟣 Connect MetaMask</button>
+    <p id="wallet-status">Not connected</p>
+
+    <label>BNB Amount:
+      <input type="number" id="bnbAmount" placeholder="e.g. 0.05">
+    </label>
+
+    <label>USD Amount:
+      <input type="number" id="usdAmount" placeholder="e.g. 10">
+    </label>
+
+    <button id="calculate">🔥 Calculate MET</button>
+    <p id="bnb-price">BNB/USD: $0</p>
+    <p id="metResult">You will receive: 0 MET</p>
+
+    <button id="buy">💸 Buy MET</button>
+
+    <div class="links">
+      <a href="faucet.html">🔸 Claim from Faucet</a> |
+      <a href="admin.html">⚙️ Admin Panel</a>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
