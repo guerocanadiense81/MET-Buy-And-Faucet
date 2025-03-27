@@ -1,24 +1,32 @@
-faucet_js = f"""const BASE_URL = '{BASE_URL}';
+document.addEventListener('DOMContentLoaded', () => {
+  const walletStatus = document.getElementById('wallet-status');
+  const statusEl = document.getElementById('faucet-status');
+  let userAddress = null;
 
-async function connectWallet() {{
-  if (typeof window.ethereum !== 'undefined') {{
-    const accounts = await window.ethereum.request({{ method: 'eth_requestAccounts' }});
-    document.getElementById('wallet-status').innerText = `Connected: ${{accounts[0]}}`;
-    window.userAddress = accounts[0];
-  }}
-}}
+  window.connectWallet = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      userAddress = accounts[0];
+      walletStatus.textContent = `Connected: ${userAddress}`;
+    } else {
+      alert('Please install MetaMask!');
+    }
+  };
 
-async function claimFaucet() {{
-  if (!window.userAddress) return alert('Please connect wallet first');
-  const res = await fetch(`${{BASE_URL}}/api/claim-faucet`, {{
-    method: 'POST',
-    headers: {{ 'Content-Type': 'application/json' }},
-    body: JSON.stringify({{ userAddress: window.userAddress }})
-  }});
-  const data = await res.json();
-  if (data.txHash) {{
-    document.getElementById('faucet-status').innerText = `Success! Tx: ${{data.txHash}}`;
-  }} else {{
-    document.getElementById('faucet-status').innerText = `Error: ${{data.error}}`;
-  }}
-}}
+  window.claimFaucet = async () => {
+    if (!userAddress) return alert('Please connect wallet first');
+
+    const res = await fetch('https://met-buy-and-faucet.onrender.com/api/claim-faucet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userAddress }),
+    });
+
+    const data = await res.json();
+    if (data.txHash) {
+      statusEl.textContent = `✅ Claimed! TX: ${data.txHash}`;
+    } else {
+      statusEl.textContent = `❌ Error: ${data.error}`;
+    }
+  };
+});
