@@ -6,32 +6,36 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>MET Faucet</header>
   <div class="container">
-    <p>Click to claim 1 MET every 24 hours.</p>
-    <button id="connectMetaMask">Connect Wallet</button>
-    <button id="claimFaucet">Claim Faucet</button>
-    <div id="faucet-status"></div>
-    <a href="index.html">← Back to Buy Page</a>
+    <h1>💧 Claim MET Faucet</h1>
+    <p id="wallet-status">Not connected</p>
+
+    <button class="btn" onclick="connectWallet()">🔌 Connect MetaMask</button>
+    <button class="btn" onclick="claimFaucet()">💦 Claim 1 MET</button>
+
+    <p class="status" id="faucet-status"></p>
+
+    <div class="links">
+      <a href="index.html">← Back to Buy Page</a> |
+      <a href="admin.html">⚙️ Admin Panel</a>
+    </div>
   </div>
+
   <script>
-    let userAddress;
-
-    document.getElementById('connectMetaMask').addEventListener('click', async () => {
-      if (window.ethereum) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        userAddress = ethereum.selectedAddress;
-      } else {
-        alert('MetaMask not detected!');
+    async function connectWallet() {
+      if (typeof window.ethereum !== 'undefined') {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        document.getElementById('wallet-status').innerText = `Connected: ${accounts[0]}`;
+        window.userAddress = accounts[0];
       }
-    });
+    }
 
-    document.getElementById('claimFaucet').addEventListener('click', async () => {
-      if (!userAddress) return alert('Please connect wallet first.');
+    async function claimFaucet() {
+      if (!window.userAddress) return alert('Please connect wallet first');
       const res = await fetch('/api/claim-faucet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userAddress })
+        body: JSON.stringify({ userAddress: window.userAddress })
       });
       const data = await res.json();
       if (data.txHash) {
@@ -39,8 +43,7 @@
       } else {
         document.getElementById('faucet-status').innerText = `Error: ${data.error}`;
       }
-    });
+    }
   </script>
 </body>
 </html>
-
