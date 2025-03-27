@@ -1,34 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Buy MET Tokens with BNB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy MET Token</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1>Buy MET Tokens with BNB</h1>
+  <div class="container">
+    <h1>🚀 Buy MET Tokens</h1>
 
-  <button onclick="connectMetaMask()">Connect MetaMask</button>
-  <button onclick="connectWalletConnect()">Connect WalletConnect</button>
-  <p id="wallet-status">Not connected</p>
+    <button id="connectMetaMask">🔌 Connect MetaMask</button>
+    <p id="wallet-status">Not connected</p>
 
-  <p id="bnb-price">Fetching BNB price...</p>
+    <div class="input-group">
+      <label for="bnbAmount">BNB Amount</label>
+      <input type="number" id="bnbAmount" placeholder="e.g. 0.05">
+    </div>
 
-  <label for="bnbAmount">BNB Amount:</label>
-  <input type="number" id="bnbAmount" placeholder="Enter BNB amount" oninput="convertFromBNB()" />
+    <div class="input-group">
+      <label for="usdAmount">USD Amount</label>
+      <input type="number" id="usdAmount" placeholder="e.g. 10">
+    </div>
 
-  <br><br>
+    <button id="calculate">💰 Calculate MET</button>
+    <p id="bnb-price">BNB/USD: ...</p>
+    <p id="metResult">You will receive: 0 MET</p>
 
-  <label for="usdAmount">or USD Amount:</label>
-  <input type="number" id="usdAmount" placeholder="Enter USD amount" oninput="convertFromUSD()" />
+    <button id="buy">🛒 Buy MET</button>
 
-  <p id="metResult">You will receive: 0 MET</p>
+    <br /><br />
+    <a href="faucet.html">🪙 Claim from Faucet</a> |
+    <a href="admin.html">⚙️ Admin Panel</a>
+  </div>
 
-  <button onclick="calculateAndBuy()">Calculate</button>
-
-  <br><br>
-  <a href="faucet.html">Go to Faucet Page</a> | <a href="admin.html">Go to Admin Page</a>
-
-  <script src="main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
