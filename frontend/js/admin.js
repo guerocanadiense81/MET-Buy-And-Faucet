@@ -1,25 +1,33 @@
-admin_js = f"""const BASE_URL = '{BASE_URL}';
+document.addEventListener('DOMContentLoaded', () => {
+  const walletStatus = document.getElementById('admin-wallet-status');
+  const statusEl = document.getElementById('admin-status');
+  let adminAddress = null;
 
-async function connectWallet() {{
-  if (typeof window.ethereum !== 'undefined') {{
-    const accounts = await window.ethereum.request({{ method: 'eth_requestAccounts' }});
-    document.getElementById('admin-wallet-status').innerText = `Connected: ${{accounts[0]}}`;
-    window.adminAddress = accounts[0];
-  }}
-}}
+  window.connectWallet = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      adminAddress = accounts[0];
+      walletStatus.textContent = `Connected: ${adminAddress}`;
+    } else {
+      alert('Please install MetaMask!');
+    }
+  };
 
-async function updateDrip() {{
-  const amount = document.getElementById('dripAmount').value;
-  if (!amount) return alert('Enter amount');
-  const res = await fetch(`${{BASE_URL}}/api/update-drip`, {{
-    method: 'POST',
-    headers: {{ 'Content-Type': 'application/json' }},
-    body: JSON.stringify({{ amount }})
-  }});
-  const data = await res.json();
-  if (data.success) {{
-    document.getElementById('admin-status').innerText = `Drip updated to ${{amount}} MET`;
-  }} else {{
-    document.getElementById('admin-status').innerText = `Error: ${{data.error}}`;
-  }}
-}}
+  window.updateDrip = async () => {
+    const amount = document.getElementById('dripAmount').value;
+    if (!amount) return alert('Enter amount');
+
+    const res = await fetch('https://met-buy-and-faucet.onrender.com/api/update-drip', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount }),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      statusEl.textContent = `✅ Drip updated to ${amount} MET`;
+    } else {
+      statusEl.textContent = `❌ Error: ${data.error}`;
+    }
+  };
+});
