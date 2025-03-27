@@ -1,1 +1,0 @@
-// METToken smart contract

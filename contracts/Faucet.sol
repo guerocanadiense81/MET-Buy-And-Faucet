@@ -1,1 +1,0 @@
-// Faucet smart contract
